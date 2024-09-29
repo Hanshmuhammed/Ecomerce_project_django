@@ -1,0 +1,24 @@
+# Django specific
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+# Ignore virtual environment
+venv/
+env/
+
+# Database
+*.sqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Ignore migrations
+**/migrations/
+
+# VS Code specific
+.vscode/
