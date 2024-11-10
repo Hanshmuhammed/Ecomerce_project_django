@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from . models import order,orded_item
 from products.models import product
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def show_cart(request):
     user=request.user
@@ -41,11 +42,19 @@ def check_out(request):
         except Exception as e:
                 status_message='your order is not processed'
                 messages.error(request,status_message)
-    return redirect ('show_cart')        
+    return redirect ('show_cart')   
+     
+@login_required(login_url='account')
+def show_orders_page(request):
+    user=request.user
+    costomer=user.costomer_profile
+    order_page=order.objects.filter(owner=costomer).exclude(order_status=order.CART_STAGE)
+    context={'orders' :order_page}
+    return render(request,'order_page.html',context)     
 
 
         
-
+@login_required(login_url='account')
 def add_to_cart(request):
     if request.POST:
         user=request.user
